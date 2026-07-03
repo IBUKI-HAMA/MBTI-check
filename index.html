@@ -1,11 +1,133 @@
 <!DOCTYPE html>
 <html lang="ja">
 <head>
-    <meta charset="utf-8">
-    <title>自治体DX診断</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>自治体DX診断結果</title>
+
+<style>
+body{
+    font-family:sans-serif;
+    max-width:700px;
+    margin:40px auto;
+    padding:20px;
+}
+
+h1{
+    color:#0078d4;
+}
+
+input{
+    width:100%;
+    padding:10px;
+    margin-bottom:10px;
+    box-sizing:border-box;
+}
+
+button{
+    background:#0078d4;
+    color:white;
+    border:none;
+    padding:10px 20px;
+    cursor:pointer;
+}
+
+.result{
+    margin-top:30px;
+    padding:20px;
+    border:1px solid #ddd;
+    display:none;
+}
+
+.error{
+    color:red;
+    margin-top:20px;
+}
+</style>
 </head>
+
 <body>
-    <h1>自治体DX診断</h1>
-    <p>GitHub Pages公開成功！</p>
+
+<h1>自治体DX診断結果</h1>
+
+<label>自治体名</label>
+<input id="city">
+
+<label>部署名</label>
+<input id="dept">
+
+<label>氏名</label>
+<input id="name">
+
+<button onclick="searchResult()">検索</button>
+
+<div id="error" class="error"></div>
+
+<div id="result" class="result">
+    <h2 id="type"></h2>
+
+    <h3>おすすめソリューション</h3>
+    <p id="solution"></p>
+</div>
+
+<script>
+
+const data = [
+
+{
+    city:"ダミー市",
+    dept:"ダミー3",
+    name:"aaaa",
+    type:"全庁改善推進型",
+    solution:"クラファス、マイナンバーカード対応記帳台、VUEVO Display"
+},
+
+{
+    city:"あああああああああ",
+    dept:"ああああ",
+    name:"aaaaaa",
+    type:"横展開チャレンジ型",
+    solution:"学齢簿・就学援助・就学相談システム、要保護児童相談システム"
+}
+
+];
+
+function searchResult(){
+
+const city=document.getElementById("city").value.trim();
+const dept=document.getElementById("dept").value.trim();
+const name=document.getElementById("name").value.trim();
+
+const found=data.find(x =>
+x.city===city &&
+x.dept===dept &&
+x.name===name
+);
+
+if(found){
+
+document.getElementById("error").innerHTML="";
+
+document.getElementById("type").innerHTML=
+"診断タイプ："+found.type;
+
+document.getElementById("solution").innerHTML=
+found.solution;
+
+document.getElementById("result").style.display="block";
+
+}else{
+
+document.getElementById("result").style.display="none";
+
+document.getElementById("error").innerHTML=
+"該当者が見つかりません";
+
+}
+
+}
+
+</script>
+
 </body>
 </html>
