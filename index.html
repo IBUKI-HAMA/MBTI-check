@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="ja">
 <head>
@@ -50,13 +51,13 @@ button{
 
 <h1>自治体DX診断結果</h1>
 
-<label>自治体名</label>
+<label>自治体名（必須）</label>
 <input id="city">
 
-<label>部署名</label>
+<label>部署名（必須）</label>
 <input id="dept">
 
-<label>氏名</label>
+<label>氏名（必須）</label>
 <input id="name">
 
 <button onclick="searchResult()">検索</button>
@@ -94,34 +95,44 @@ const data = [
 
 function searchResult(){
 
-const city=document.getElementById("city").value.trim();
-const dept=document.getElementById("dept").value.trim();
-const name=document.getElementById("name").value.trim();
+const city = document.getElementById("city").value.trim();
+const dept = document.getElementById("dept").value.trim();
+const name = document.getElementById("name").value.trim();
 
-const found=data.find(x =>
-x.city===city &&
-x.dept===dept &&
-x.name===name
+if(!city || !dept || !name){
+
+    document.getElementById("result").style.display = "none";
+
+    document.getElementById("error").innerHTML =
+        "自治体名・部署名・氏名をすべて入力してください";
+
+    return;
+}
+
+const found = data.find(x =>
+    x.city === city &&
+    x.dept === dept &&
+    x.name === name
 );
 
 if(found){
 
-document.getElementById("error").innerHTML="";
+    document.getElementById("error").innerHTML = "";
 
-document.getElementById("type").innerHTML=
-"診断タイプ："+found.type;
+    document.getElementById("type").innerHTML =
+        "診断タイプ： " + found.type;
 
-document.getElementById("solution").innerHTML=
-found.solution;
+    document.getElementById("solution").innerHTML =
+        found.solution;
 
-document.getElementById("result").style.display="block";
+    document.getElementById("result").style.display = "block";
 
 }else{
 
-document.getElementById("result").style.display="none";
+    document.getElementById("result").style.display = "none";
 
-document.getElementById("error").innerHTML=
-"該当者が見つかりません";
+    document.getElementById("error").innerHTML =
+        "入力内容が一致しません";
 
 }
 
