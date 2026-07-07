@@ -4,71 +4,188 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>自治体DX診断結果</title>
+<title>自治体DXタイプ診断</title>
 
 <style>
-body{
-    font-family:sans-serif;
-    max-width:700px;
-    margin:40px auto;
-    padding:20px;
+
+*{
+    box-sizing:border-box;
 }
 
-h1{
-    color:#0078d4;
+body{
+    margin:0;
+    font-family:"Yu Gothic","Segoe UI",sans-serif;
+    background:#07121f;
+    color:white;
+}
+
+.container{
+    max-width:1200px;
+    margin:auto;
+    padding:40px;
+    display:grid;
+    grid-template-columns:1fr 450px;
+    gap:40px;
+    min-height:100vh;
+    align-items:center;
+}
+
+.form-card{
+    background:white;
+    color:#1B3A5C;
+    padding:40px;
+    border-radius:24px;
+}
+
+.form-card h2{
+    margin-top:0;
+    color:#1B3A5C;
+}
+
+.form-card p{
+    color:#607080;
+}
+
+label{
+    display:block;
+    margin-top:20px;
+    margin-bottom:8px;
+    font-weight:bold;
 }
 
 input{
     width:100%;
-    padding:10px;
-    margin-bottom:10px;
-    box-sizing:border-box;
+    padding:14px;
+    border:1px solid #d6dbe2;
+    border-radius:10px;
+    font-size:16px;
 }
 
 button{
-    background:#0078d4;
+    width:100%;
+    margin-top:30px;
+    padding:16px;
+    background:#1B3A5C;
     color:white;
     border:none;
-    padding:10px 20px;
+    border-radius:14px;
+    font-size:18px;
     cursor:pointer;
+}
+
+button:hover{
+    background:#23486d;
+}
+
+.side{
+    text-align:center;
+}
+
+.side h1{
+    font-size:52px;
+    line-height:1.2;
+    margin-bottom:20px;
+}
+
+.side p{
+    color:#8FBCCC;
+    font-size:20px;
+    line-height:1.8;
 }
 
 .result{
     margin-top:30px;
-    padding:20px;
-    border:1px solid #ddd;
+    background:#0c1f36;
+    color:white;
+    border-radius:16px;
+    padding:30px;
     display:none;
 }
 
+.result h3{
+    color:#8FBCCC;
+}
+
+#type{
+    color:#8FBCCC;
+    font-size:34px;
+    margin-top:0;
+}
+
 .error{
-    color:red;
+    color:#ff4d4f;
     margin-top:20px;
 }
+
+@media(max-width:900px){
+
+.container{
+    grid-template-columns:1fr;
+}
+
+.side{
+    order:-1;
+}
+
+.side h1{
+    font-size:36px;
+}
+
+}
+
 </style>
 </head>
 
 <body>
 
-<h1>自治体DX診断結果</h1>
+<div class="container">
 
-<label>自治体名（必須）</label>
-<input id="city">
+<div class="form-card">
 
-<label>部署名（必須）</label>
-<input id="dept">
+<h2>基本情報の入力</h2>
 
-<label>氏名（必須）</label>
-<input id="name">
+<p>
+ご回答時に入力した自治体名・部署名・お名前を入力してください
+</p>
 
-<button onclick="searchResult()">検索</button>
+<label>１．自治体名</label>
+<input id="city" placeholder="例）○○市">
+
+<label>２．部署名</label>
+<input id="dept" placeholder="例）DX推進課">
+
+<label>３．お名前</label>
+<input id="name" placeholder="例）内田 太郎">
+
+<button onclick="searchResult()">次へ ➜</button>
 
 <div id="error" class="error"></div>
 
 <div id="result" class="result">
-    <h2 id="type"></h2>
 
-    <h3>おすすめソリューション</h3>
-    <p id="solution"></p>
+<h3>あなたの診断結果</h3>
+
+<h2 id="type"></h2>
+
+<h3>おすすめのソリューション</h3>
+
+<p id="solution"></p>
+
+</div>
+
+</div>
+
+<div class="side">
+
+<h1>自治体DX<br>タイプ診断</h1>
+
+<p>
+あなたの自治体に最適な<br>
+DX推進戦略を診断します
+</p>
+
+</div>
+
 </div>
 
 <script>
@@ -84,7 +201,7 @@ async function searchResult(){
         document.getElementById("result").style.display = "none";
 
         document.getElementById("error").innerHTML =
-            "自治体名・部署名・氏名をすべて入力してください";
+        "自治体名・部署名・氏名をすべて入力してください";
 
         return;
     }
@@ -92,39 +209,44 @@ async function searchResult(){
     try{
 
         const response = await fetch(
-            "https://default045dc47ad5a1414fa0077cdb1e3f3d.e7.environment.api.powerplatform.com/powerautomate/automations/direct/cu/23/workflows/2701d707cca449a684f31539bdcc4840/triggers/manual/paths/invoke?api-version=1&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=f9avoHBUVmSXAincmVXI56XUTuN4Et6qFVy0FrF86ps",
-            {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json"
-                },
-                body: JSON.stringify({
-                    city: city,
-                    dept: dept,
-                    name: name
-                })
-            }
-        );
+        "https://default045dc47ad5a1414fa0077cdb1e3f3d.e7.environment.api.powerplatform.com/powerautomate/automations/direct/cu/23/workflows/2701d707cca449a684f31539bdcc4840/triggers/manual/paths/invoke?api-version=1&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=f9avoHBUVmSXAincmVXI56XUTuN4Et6qFVy0FrF86ps",
+        {
+            method:"POST",
+            headers:{
+                "Content-Type":"application/json"
+            },
+            body:JSON.stringify({
+                city:city,
+                dept:dept,
+                name:name
+            })
+        });
 
         const result = await response.json();
 
         document.getElementById("error").innerHTML = "";
 
         document.getElementById("type").innerHTML =
-            "診断タイプ： " + result.type;
+        result.type;
 
         document.getElementById("solution").innerHTML =
-            result.solution;
+        result.solution
+        .split("、")
+        .map(x => "✅ " + x)
+        .join("<br>");
 
-        document.getElementById("result").style.display = "block";
+        document.getElementById("result").style.display =
+        "block";
 
     }
+
     catch(error){
 
-        document.getElementById("result").style.display = "none";
+        document.getElementById("result").style.display =
+        "none";
 
         document.getElementById("error").innerHTML =
-            "通信エラーが発生しました";
+        "通信エラーが発生しました";
 
         console.error(error);
 
