@@ -106,13 +106,7 @@ async function searchResult(){
             }
         );
 
-        alert("HTTP Status: " + response.status);
-
-        const text = await response.text();
-
-        alert("Response:\n\n" + text);
-
-        const result = JSON.parse(text);
+        const result = await response.json();
 
         document.getElementById("error").innerHTML = "";
 
@@ -131,8 +125,6 @@ async function searchResult(){
 
         document.getElementById("error").innerHTML =
             "通信エラーが発生しました";
-
-        alert("ERROR:\n\n" + error);
 
         console.error(error);
 
