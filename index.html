@@ -24,7 +24,7 @@ body{
     margin:auto;
     padding:40px;
     display:grid;
-    grid-template-columns:1fr 450px;
+    grid-template-columns:450px 1fr;
     gap:40px;
     min-height:100vh;
     align-items:center;
@@ -140,51 +140,51 @@ button:hover{
 
 <div class="container">
 
-<div class="form-card">
+    <div class="side">
 
-<h2>基本情報の入力</h2>
+        <h1>自治体DX<br>タイプ診断</h1>
 
-<p>
-ご回答時に入力した自治体名・部署名・お名前を入力してください
-</p>
+        <p>
+            あなたの自治体に最適な<br>
+            DX推進戦略を診断します
+        </p>
 
-<label>１．自治体名</label>
-<input id="city" placeholder="例）○○市">
+    </div>
 
-<label>２．部署名</label>
-<input id="dept" placeholder="例）DX推進課">
+    <div class="form-card">
 
-<label>３．お名前</label>
-<input id="name" placeholder="例）内田 太郎">
+        <h2>基本情報の入力</h2>
 
-<button onclick="searchResult()">次へ ➜</button>
+        <p>
+            ご回答時に入力した自治体名・部署名・お名前を入力してください
+        </p>
 
-<div id="error" class="error"></div>
+        <label>１．自治体名</label>
+        <input id="city" placeholder="例）○○市">
 
-<div id="result" class="result">
+        <label>２．部署名</label>
+        <input id="dept" placeholder="例）DX推進課">
 
-<h3>あなたの診断結果</h3>
+        <label>３．お名前</label>
+        <input id="name" placeholder="例）内田 太郎">
 
-<h2 id="type"></h2>
+        <button onclick="searchResult()">次へ ➜</button>
 
-<h3>おすすめのソリューション</h3>
+        <div id="error" class="error"></div>
 
-<p id="solution"></p>
+        <div id="result" class="result">
 
-</div>
+            <h3>あなたの診断結果</h3>
 
-</div>
+            <h2 id="type"></h2>
 
-<div class="side">
+            <h3>おすすめのソリューション</h3>
 
-<h1>自治体DX<br>タイプ診断</h1>
+            <p id="solution"></p>
 
-<p>
-あなたの自治体に最適な<br>
-DX推進戦略を診断します
-</p>
+        </div>
 
-</div>
+    </div>
 
 </div>
 
