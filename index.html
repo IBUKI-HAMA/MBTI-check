@@ -79,6 +79,12 @@ button:hover{
     background:#23486d;
 }
 
+button:disabled{
+    background:#9aa4af;
+    cursor:not-allowed;
+    opacity:0.8;
+}
+
 .side{
     text-align:center;
 }
@@ -174,7 +180,7 @@ button:hover{
         <label>３．お名前</label>
         <input id="name" placeholder="例）内田 太郎">
 
-        <button onclick="searchResult()">診断結果を表示</button>
+        <button id="searchBtn" onclick="searchResult()">診断結果を表示</button>
 
         <div id="error" class="error"></div>
 
@@ -198,6 +204,9 @@ button:hover{
 
 async function searchResult(){
 
+    const btn = document.getElementById(    btn.disabled = true;
+    btn.innerHTML = "診断結果を取得中...";
+
     const city = document.getElementById("city").value.trim();
     const dept = document.getElementById("dept").value.trim();
     const name = document.getElementById("name").value.trim();
@@ -209,14 +218,24 @@ async function searchResult(){
         document.getElementById("error").innerHTML =
         "自治体名・部署名・氏名をすべて入力してください";
 
+        btn.disabled = false;
+        btn.innerHTML = "診断結果を表示";
+
         return;
     }
 
+    const url =
+        "https://default045dc47ad5a1414fa0077cdb1e3f3d.e7.environment.api.powerplatform.com" +
+        "/powerautomate/automations/direct/cu/23/workflows/2701d707cca449a684f31539bdcc4840" +
+        "/triggers/manual/paths/invoke" +
+        "?api-version=1" +
+        "&sp=%2Ftriggers%2Fmanual%2Frun" +
+        "&sv=1.0" +
+        "&sig=f9avoHBUVmSXAincmVXI56XUTuN4Et6qFVy0FrF86ps";
+
     try{
 
-        const response = await fetch(
-        "https://default045dc47ad5a1414fa0077cdb1e3f3d.e7.environment.api.powerplatform.com/powerautomate/automations/direct/cu/23/workflows/2701d707cca449a684f31539bdcc4840/triggers/manual/paths/invoke?api-version=1&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=f9avoHBUVmSXAincmVXI56XUTuN4Et6qFVy0FrF86ps",
-        {
+        const response = await fetch(url,{
             method:"POST",
             headers:{
                 "Content-Type":"application/json"
@@ -244,6 +263,9 @@ async function searchResult(){
         document.getElementById("result").style.display =
         "block";
 
+        btn.disabled = true;
+        btn.innerHTML = "診断結果を表示";
+
     }
 
     catch(error){
@@ -253,6 +275,9 @@ async function searchResult(){
 
         document.getElementById("error").innerHTML =
         "通信エラーが発生しました";
+
+        btn.disabled = false;
+        btn.innerHTML = "診断結果を表示";
 
         console.error(error);
 
