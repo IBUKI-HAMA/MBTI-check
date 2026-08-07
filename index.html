@@ -1,354 +1,247 @@
-
 <!DOCTYPE html>
+
 <html lang="ja">
+
 <head>
+
 <meta charset="utf-8">
+
 <meta name="viewport" content="width=device-width, initial-scale=1">
+
 <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+
 <meta http-equiv="Pragma" content="no-cache">
+
 <meta http-equiv="Expires" content="0">
+
 <title>自治体DXタイプ診断</title>
 
 <style>
-
+ 
 *{
-    box-sizing:border-box;
+box-sizing:border-box;
 }
 
 body{
-    margin:0;
-    font-family:"Yu Gothic","Segoe UI",sans-serif;
-    background:#07121f;
-    color:white;
+margin:0;
+font-family:"Yu Gothic","Segoe UI",sans-serif;
+background:#07121f;
+color:white;
 }
-
 .container{
-    max-width:1200px;
-    margin:auto;
-    padding:40px;
-    display:grid;
-    grid-template-columns:450px 1fr;
-    gap:40px;
-    min-height:100vh;
-    align-items:center;
+max-width:1200px;
+margin:auto;
+padding:40px;
+display:grid;
+grid-template-columns:450px 1fr;
+gap:40px;
+min-height:100vh;
+align-items:center;
 }
-
 .form-card{
-    background:white;
-    color:#1B3A5C;
-    padding:40px;
-    border-radius:24px;
+background:white;
+color:#1B3A5C;
+padding:40px;
+border-radius:24px;
 }
-
+ 
 .form-card h2{
-    margin-top:0;
-    color:#1B3A5C;
+margin-top:0;
+color:#1B3A5C;
 }
 
 .form-card p{
-    color:#607080;
+color:#607080;
 }
-
+ 
 label{
-    display:block;
-    margin-top:20px;
-    margin-bottom:8px;
-    font-weight:bold;
+display:block;
+margin-top:20px;
+margin-bottom:8px;
+font-weight:bold;
 }
-
+ 
 input{
-    width:100%;
-    padding:14px;
-    border:1px solid #d6dbe2;
-    border-radius:10px;
-    font-size:16px;
+width:100%;
+padding:14px;
+border:1px solid #d6dbe2;
+border-radius:10px;
+font-size:16px;
 }
 
 button{
-    width:100%;
-    margin-top:30px;
-    padding:16px;
-    background:#1B3A5C;
-    color:white;
-    border:none;
-    border-radius:14px;
-    font-size:18px;
-    cursor:pointer;
+width:100%;
+margin-top:30px;
+padding:16px;
+background:#1B3A5C;
+color:white;
+border:none;
+border-radius:14px;
+font-size:18px;
+cursor:pointer;
 }
-
+ 
 button:hover{
-    background:#23486d;
+background:#23486d;
+}
+ 
+button:disabled{
+background:#9aa4af;
+cursor:not-allowed;
+opacity:0.8;
 }
 
 .side{
-    text-align:center;
+text-align:center;
 }
-
+ 
 .side h1{
-    font-size:52px;
-    line-height:1.2;
-    margin-bottom:20px;
+font-size:52px;
+line-height:1.2;
+margin-bottom:20px;
 }
-
+ 
 .side p{
-    color:#8FBCCC;
-    font-size:20px;
-    line-height:1.8;
+color:#8FBCCC;
+font-size:20px;
+line-height:1.8;
 }
-
+ 
 .result{
-    margin-top:30px;
-    background:#0c1f36;
-    color:white;
-    border-radius:16px;
-    padding:30px;
-    display:none;
+margin-top:30px;
+background:#0c1f36;
+color:white;
+border-radius:16px;
+padding:30px;
+display:none;
 }
 
 .result h3{
-    color:#8FBCCC;
+color:#8FBCCC;
 }
-
+ 
 #type{
-    color:white;
-    font-size:34px;
-    margin-top:0;
+color:white;
+font-size:34px;
+margin-top:0;
 }
-
+ 
 #solution{
-    color:white;
+color:white;
 }
-
+ 
 .error{
-    color:#ff4d4f;
-    margin-top:20px;
+color:#ff4d4f;
+margin-top:20px;
 }
-
+ 
 @media(max-width:900px){
-
 .container{
-    grid-template-columns:1fr;
+grid-template-columns:1fr;
 }
-
 .side{
-    order:-1;
+order:-1;
 }
-
 .side h1{
-    font-size:36px;
+font-size:36px;
 }
-
 }
-
+ 
 </style>
 </head>
-
 <body>
-
 <div class="container">
-
-    <div class="side">
-
-        <h1>自治体DX<br>タイプ診断</h1>
-
-        <p>
-            あなたの自治体に最適な<br>
-            DX推進戦略を診断します
-        </p>
-
-    </div>
-
-    <div class="form-card">
-
-        <h2>基本情報の入力</h2>
-
-        <p>
-            ご回答時に入力した自治体名・部署名・お名前を入力してください
-        </p>
-
-        <label>１．自治体名</label>
-        <input id="city" placeholder="例）○○市">
-
-        <label>２．部署名</label>
-        <input id="dept" placeholder="例）DX推進課">
-
-        <label>３．お名前</label>
-        <input id="name" placeholder="例）内田 太郎">
-
-        <button onclick="searchResult()">診断結果を表示</button>
-
-        <div id="error" class="error"></div>
-
-        <div id="result" class="result">
-
-            <h3>あなたの診断結果</h3>
-
-            <h2 id="type"></h2>
-
-            <h3>おすすめのソリューション</h3>
-
-            <p id="solution"></p>
-
-        </div>
-
-    </div>
-
+<div class="side">
+<h1>自治体DX<br>タイプ診断</h1>
+<p>
+あなたの自治体に最適な<br>
+DX推進戦略を診断します
+</p>
 </div>
+<div class="form-card">
+<h2>基本情報の入力</h2>
+<p>
+ご回答時に入力した自治体名・部署名・お名前を入力してください
+</p>
+ 
+<label>１．自治体名</label>
+<input id="city" placeholder="例）○○市">
+<label>２．部署名</label>
 
+<input id="dept" placeholder="例）DX推進課">
+
+<label>３．お名前</label>
+<input id="name" placeholder="例）内田 太郎">
+<button id="searchBtn" onclick="searchResult()">
+診断結果を表示
+</button>
+ 
+<div id="error" class="error"></div>
+<div id="result" class="result">
+<h3>あなたの診断結果</h3>
+<h2 id="type"></h2>
+<h3>おすすめのソリューション</h3>
+<p id="solution"></p>
+</div>
+</div>
+</div>
+    
 <script>
-2
- 
-3
 async function searchResult(){
-4
- 
-5
 const btn = document.getElementById("searchBtn");
-6
- 
-7
 btn.disabled = true;
-8
 btn.innerHTML = "診断結果取得中...";
-9
- 
-10
 const city = document.getElementById("city").value.trim();
-11
 const dept = document.getElementById("dept").value.trim();
-12
 const name = document.getElementById("name").value.trim();
-13
- 
-14
 if(!city || !dept || !name){
-15
- 
-16
 document.getElementById("result").style.display = "none";
-17
- 
-18
 document.getElementById("error").innerHTML =
-19
 "自治体名・部署名・氏名をすべて入力してください";
-20
- 
-21
 btn.disabled = false;
-22
 btn.innerHTML = "診断結果を表示";
-23
- 
-24
 return;
-25
 }
-26
- 
-27
 try{
-28
- 
-29
 const response = await fetch(
-30
 "https://default045dc47ad5a1414fa0077cdb1e3f3d.e7.environment.api.powerplatform.com/powerautomate/automations/direct/cu/23/workflows/2701d707cca449a684f31539bdcc4840/triggers/manual/paths/invoke?api-version=1&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=f9avoHBUVmSXAincmVXI56XUTuN4Et6qFVy0FrF86ps",
-31
 {
-32
 method:"POST",
-33
 headers:{
-34
 "Content-Type":"application/json"
-35
 },
-36
 body:JSON.stringify({
-37
 city:city,
-38
 dept:dept,
-39
 name:name
-40
 })
-41
 });
-42
- 
-43
 const result = await response.json();
-44
- 
-45
 document.getElementById("error").innerHTML = "";
-46
- 
-47
 document.getElementById("type").innerHTML =
-48
 result.type;
-49
- 
-50
 document.getElementById("solution").innerHTML =
-51
 result.solution
-52
 .split("、")
-53
 .map(x => "✅ " + x)
-54
 .join("<br>");
-55
- 
-56
 document.getElementById("result").style.display = "block";
-57
- 
-58
 }
-59
+
 catch(error){
-60
- 
-61
 document.getElementById("result").style.display = "none";
-62
- 
-63
-document.getElementById("error").innerHTML =
-64
+ document.getElementById("error").innerHTML =
 "通信エラーが発生しました";
-65
- 
-66
 console.error(error);
-67
- 
-68
 }
-69
+
 finally{
-70
- 
-71
 btn.disabled = false;
-72
 btn.innerHTML = "診断結果を表示";
-73
- 
-74
 }
-75
- 
-76
 }
-77
  
-78
 </script>
 </body>
+
 </html>
